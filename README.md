@@ -8,9 +8,13 @@
 
 ### Quick Start
 
++ install  
+> npm install miner_pool --save
+
++ usage  
 ```javascript
-const { config } = require('miner-pool')
-const createMinerPoolFactory = require('miner-pool')
+const { config } = require('miner_pool')
+const createMinerPoolFactory = require('miner_pool')
 const minerPool = createMinerPoolFactory(config.MINER_POOL_TYPES.ANT_POOL, { key: 'foo', secret: 'bar', accountName: 'zzz'})
 const const stats = await minerPool.getAccountStats()
 
