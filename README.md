@@ -1,4 +1,4 @@
-## MinerPool sdk wrapper
+## MinerPool SDK Wrapper
 
 ### minerPool list
 
