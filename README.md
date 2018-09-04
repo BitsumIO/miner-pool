@@ -16,7 +16,7 @@
 const { config } = require('miner_pool')
 const createMinerPoolFactory = require('miner_pool')
 const minerPool = createMinerPoolFactory(config.MINER_POOL_TYPES.ANT_POOL, { key: 'foo', secret: 'bar', accountName: 'zzz'})
-const const stats = await minerPool.getAccountStats()
+const stats = await minerPool.getAccountStats()
 
 ```
 
