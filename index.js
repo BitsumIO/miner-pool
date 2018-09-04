@@ -1,3 +1,4 @@
+const config = require('./src/config')
 const F2MinerPool = require('./src/f2_miner_pool')
 const AntMinerPool = require('./src/ant_miner_pool')
 
