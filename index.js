@@ -20,4 +20,7 @@ module.exports = function createMinerPoolFactory (type, ...args) {
   }
 }
 
+module.exports.F2MinerPool = F2MinerPool
+module.exports.AntMinerPool = AntMinerPool
+module.exports.BWMinerPool = BWMinerPool
 module.exports.config = require('./src/config')
