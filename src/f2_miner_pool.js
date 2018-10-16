@@ -58,7 +58,7 @@ class F2MinerPool {
     const stats = await this.getAccountStats(coinTag, coinAddress)
     const keys = Object.keys(stats.hashrate_history)
     const key = keys[keys.length - 1]
-    return { timestamp: key, value: stats.hashrate_history[key] }
+    return { interval: 10, timestamp: key, value: stats.hashrate_history[key] }
   }
 
   async getWorkerStatsByDay (coinTag, coinAddress, workerName) {
