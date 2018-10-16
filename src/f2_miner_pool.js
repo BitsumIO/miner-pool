@@ -45,7 +45,7 @@ class F2MinerPool {
     return stats.hashes_last_day
   }
 
-  getWorkers (coinTag, coinAddress, params = {}) {
+  async getWorkers (coinTag, coinAddress, params = {}) {
     const stats = await this.getAccountStats(coinTag, coinAddress)
     return stats.workers.map(it => it[0])
   }
