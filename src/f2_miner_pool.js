@@ -56,8 +56,8 @@ class F2MinerPool {
   //请求单个用户过去10分钟算力数据
   async getAccountLast10MinutesHashrate(coinTag, coinAddress) {
     const stats = await this.getAccountStats(coinTag, coinAddress)
-    const key =  Object.keys(stats.hashes_last_day).sort()[0]
-    return { timestamp: key, value: stats.hashes_last_day[key] }
+    const key =  Object.keys(stats.hashrate_history).sort()[0]
+    return { timestamp: key, value: stats.hashrate_history[key] }
   }
 
   async getWorkerStatsByDay (coinTag, coinAddress, workerName) {
