@@ -1,6 +1,7 @@
 const config = require('./config')
 const request = require('request-promise')
 const moment = require('moment-timezone')
+const sortBy = require('lodash.sortby')
 
 class F2MinerPool {
   constructor (options) {
@@ -24,13 +25,14 @@ class F2MinerPool {
 
   normalizePaymentHistory (result) {
     if (!result || !result.payout_history) return []
-    return result.payout_history.map(it => {
+    const data = result.payout_history.map(it => {
       return {
         txId: it[1],
         amount: it[2],
         timestamp: moment(it[0]).toISOString()
       }
     })
+    return sortBy(data, ['timestamp'])
   }
 
   //支付历史记录

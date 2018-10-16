@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "lodash.sortby": "^4.7.0",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.21",
     "request": "^2.88.0",

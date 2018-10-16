@@ -35,13 +35,14 @@ class AntMinerPool {
 
   normalizePaymentHistory (result) {
     if (!result || !result.rows || !result.rows.length) return []
-    return result.rows.map(it => {
+    const data = result.rows.map(it => {
       return {
         txId: it.txId,
         amount: it.amount,
         timestamp: moment(it.timestamp).toISOString()
       }
     })
+    return sortBy(data, ['timestamp'])
   }
 
   async getPaymentHistory (coin) {
