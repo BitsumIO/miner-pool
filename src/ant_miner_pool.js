@@ -1,6 +1,7 @@
 const crypto = require('crypto')
 const config = require('./config')
 const request = require('request-promise')
+const moment = require('moment-timezone')
 
 class AntMinerPool {
   constructor (options) {
@@ -32,9 +33,21 @@ class AntMinerPool {
     return this.makeRequest({ url: config.MINER_POOL.ANT_POOL.URL + 'account.htm', qs })
   }
 
-  getPaymentHistory (coin, params) {
-    const qs = Object.assign({}, params, { coin, key: this.key }, this.makeSignature())
-    return this.makeRequest({ url: config.MINER_POOL.ANT_POOL.URL + 'paymentHistory.htm', qs })
+  normalizePaymentHistory (result) {
+    if (!result || !result.data || result.code !== 0 || Array.isArray(result.data.rows)) return []
+    return result.data.rows.map(it => {
+      return {
+        txId: it.txId,
+        amount: it.amount,
+        timestamp: moment(it.timestamp).toISOString()
+      }
+    })
+  }
+
+  async getPaymentHistory (coin) {
+    const qs = Object.assign({}, { coin, key: this.key }, this.makeSignature())
+    const result = await this.makeRequest({ url: config.MINER_POOL.ANT_POOL.URL + 'paymentHistory.htm', qs })
+    return this.normalizePaymentHistory(result)
   }
 
   getAccountHashrate (coin) {
