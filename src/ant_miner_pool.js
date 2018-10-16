@@ -34,8 +34,8 @@ class AntMinerPool {
   }
 
   normalizePaymentHistory (result) {
-    if (!result || !result.data || result.code !== 0 || Array.isArray(result.data.rows)) return []
-    return result.data.rows.map(it => {
+    if (!result || !result.rows || !result.rows.length) return []
+    return result.rows.map(it => {
       return {
         txId: it.txId,
         amount: it.amount,
@@ -46,8 +46,8 @@ class AntMinerPool {
 
   async getPaymentHistory (coin) {
     const qs = Object.assign({}, { coin, key: this.key }, this.makeSignature())
-    const result = await this.makeRequest({ url: config.MINER_POOL.ANT_POOL.URL + 'paymentHistory.htm', qs })
-    return this.normalizePaymentHistory(result)
+    const data = await this.makeRequest({ url: config.MINER_POOL.ANT_POOL.URL + 'paymentHistory.htm', qs })
+    return this.normalizePaymentHistory(data)
   }
 
   getAccountHashrate (coin) {
@@ -56,8 +56,8 @@ class AntMinerPool {
   }
 
   async getAccountLast10MinutesHashrate(coinTag, coinAddress) {
-    const result = await this.getAccountStats(coinTag, coinAddress)
-    return { timestamp: moment().add(-10, 'minutes').toISOString(), value: result.data.last10m }
+    const result = await this.getAccountHashrate(coinTag, coinAddress)
+    return { timestamp: moment().add(-10, 'minutes').toISOString(), value: result.last10m }
   }
 
   async getAccountHashrateByType (coin, type) {
@@ -96,6 +96,7 @@ class AntMinerPool {
   }
   
   static create (options) {
+    options.accountName = options.accountName || options.name
     if (!AntMinerPool.instance[options.accountName]) {
       AntMinerPool.instance[options.accountName] = new AntMinerPool(options)
     }
