@@ -16,14 +16,6 @@ class F2MinerPool {
     return result
   }
 
-  //请求矿机过去24小时算力数据
-  async getWorkerHashrate (coinTag, coinAddress, workerName) {
-    const stats = await this.makeRequest(coinTag, coinAddress, workerName)
-    return Object.values(stats.hashrate_history).reduce((acc, cur) => {
-      return acc += cur
-    }, 0)
-  }
-
   //请求单个用户数据
   async getAccountStats (coinTag, coinAddress) {
     const result = await this.makeRequest(coinTag, coinAddress)
@@ -51,6 +43,30 @@ class F2MinerPool {
   async getAccountHashrate(coinTag, coinAddress) {
     const stats = await this.getAccountStats(coinTag, coinAddress)
     return stats.hashes_last_day
+  }
+
+  getWorkers (coinTag, coinAddress, params = {}) {
+    const stats = await this.getAccountStats(coinTag, coinAddress)
+    return stats.workers.map(it => it[0])
+  }
+
+  getAllWorkers (coin, coinAddress) {
+    return this.getWorkers(coin, coinAddress)
+  }
+
+  //请求矿机过去24小时算力数据
+  async getWorkerHashrate (coinTag, coinAddress, workerName) {
+    const stats = await this.makeRequest(coinTag, coinAddress, workerName)
+    return Object.values(stats.hashrate_history).reduce((acc, cur) => {
+      return acc += cur
+    }, 0)
+  }
+
+  async getWorkerLast10MinutesHashrate (coinTag, coinAddress, worker) {
+    const stats = await this.makeRequest(coinTag, coinAddress, worker)
+    const keys = Object.keys(stats.hashrate_history)
+    const key = keys[keys.length - 1]
+    return { workerName: worker, interval: 10, timestamp: key, value: stats.hashrate_history[key] }
   }
 
   //请求单个用户过去10分钟算力数据

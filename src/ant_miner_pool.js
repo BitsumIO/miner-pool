@@ -65,14 +65,22 @@ class AntMinerPool {
     return stats[type] || 0
   }
 
-  getWorkers (coin, params = {}) {
+  getWorkers (coin, coinAddress, params = {}) {
     const qs = Object.assign({}, params, { coin, key: this.key }, this.makeSignature())
     return this.makeRequest({ url: config.MINER_POOL.ANT_POOL.URL + 'workers.htm', qs })
+  }
+
+  getAllWorkers (coin, coinAddress) {
+    return this.getWorkers(coin, coinAddress, { pageEnable: 0 })
   }
 
   async getWorkerHashrate (coin, workerName) {
     const workers = (await this.getWorkers(coin, { pageEnable: 0 })).rows
     return workers.find(it => it.worker === workerName)
+  }
+
+  async getWorkerLast10MinutesHashrate (coin, coinAddress, worker) {
+    return { workerName: worker.worker, interval: 10, value: worker.last10m, timestamp: moment().add(-10, 'minutes').toISOString() }
   }
 
   async getWorkerHashrateByType (coin, workerName, type) {
