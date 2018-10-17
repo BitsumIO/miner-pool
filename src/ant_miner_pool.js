@@ -58,7 +58,7 @@ class AntMinerPool {
 
   async getAccountLast10MinutesHashrate(coinTag, coinAddress) {
     const result = await this.getAccountHashrate(coinTag, coinAddress)
-    return { interval: 10, timestamp: moment().add(-10, 'minutes').toISOString(), value: result.last10m }
+    return { interval: 10, timestamp: moment().add(-10, 'minutes').toISOString(), value: result.last10m * 1000000 }
   }
 
   async getAccountHashrateByType (coin, type) {
@@ -81,7 +81,7 @@ class AntMinerPool {
   }
 
   async getWorkerLast10MinutesHashrate (coin, coinAddress, worker) {
-    return { workerName: worker.worker, interval: 10, value: worker.last10m, timestamp: moment().add(-10, 'minutes').toISOString() }
+    return { workerName: worker.worker, interval: 10, timestamp: moment().add(-10, 'minutes').toISOString(), value: worker.last10m * 1000000 }
   }
 
   async getWorkerHashrateByType (coin, workerName, type) {
