@@ -39,7 +39,7 @@ class AntMinerPool {
       return {
         txId: it.txId,
         amount: it.amount,
-        timestamp: moment(it.timestamp).toISOString()
+        timestamp: moment(it.timestamp).tz('Asia/Shanghai').toISOString()
       }
     })
     return sortBy(data, ['timestamp'])
