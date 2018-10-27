@@ -71,8 +71,9 @@ class AntMinerPool {
     return this.makeRequest({ url: config.MINER_POOL.ANT_POOL.URL + 'workers.htm', qs })
   }
 
-  getAllWorkers (coin, coinAddress) {
-    return this.getWorkers(coin, coinAddress, { pageEnable: 0 })
+  async getAllWorkers (coin, coinAddress) {
+    const result = await this.getWorkers(coin, coinAddress, { pageEnable: 0 })
+    return result.rows
   }
 
   async getWorkerHashrate (coin, workerName) {
