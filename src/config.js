@@ -29,7 +29,8 @@ module.exports = {
         Dash: 'dash',
         DCR: 'decred',
         XZC: 'zcoin',
-        RVN: 'raven'
+        RVN: 'raven',
+        XVG: 'xvg'
       }
     }
   }
