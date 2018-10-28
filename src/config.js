@@ -21,7 +21,7 @@ module.exports = {
       COIN_CURRENCY_MAP: {
         BTC: 'bitcoin',
         LTC: 'litecoin',
-        ETC: 'eth',
+        ETC: 'etc',
         ETH: 'eth',
         ZEC: 'zec',
         SC: 'sc',
