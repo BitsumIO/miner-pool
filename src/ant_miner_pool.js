@@ -35,13 +35,15 @@ class AntMinerPool {
 
   normalizePaymentHistory (result) {
     if (!result || !result.rows || !result.rows.length) return []
-    const data = result.rows.map(it => {
-      return {
-        txId: it.txId,
-        amount: it.amount,
-        timestamp: moment(it.timestamp).tz('Asia/Shanghai').toISOString()
-      }
-    })
+    const data = result.rows
+      .filter(it => !!it.txId)
+      .map(it => {
+        return {
+          txId: it.txId,
+          amount: it.amount,
+          timestamp: moment(it.timestamp).tz('Asia/Shanghai').toISOString()
+        }
+      })
     return sortBy(data, ['timestamp'])
   }
 

@@ -25,13 +25,15 @@ class F2MinerPool {
 
   normalizePaymentHistory (result) {
     if (!result || !result.payout_history) return []
-    const data = result.payout_history.map(it => {
-      return {
-        txId: it[1],
-        amount: it[2],
-        timestamp: moment(it[0]).toISOString()
-      }
-    })
+    const data = result.payout_history
+      .map(it => {
+        return {
+          txId: it[1],
+          amount: it[2],
+          timestamp: moment(it[0]).toISOString()
+        }
+      })
+      .filter(it => !!it.txId)
     return sortBy(data, ['timestamp'])
   }
 
