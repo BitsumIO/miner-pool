@@ -30,7 +30,7 @@ module.exports = {
         DCR: 'decred',
         XZC: 'zcoin',
         RVN: 'raven',
-        XVG: 'xvg'
+        XVG: 'verge-lyra'
       }
     }
   }
