@@ -51,7 +51,7 @@ class F2MinerPool {
 
   async getWorkers (coinTag, coinAddress, params = {}) {
     const stats = await this.getAccountStats(coinTag, coinAddress)
-    return stats.workers.map(it => it[0])
+    return stats.workers.map(it => it[0]).filter(it => !!it && it.length)
   }
 
   getAllWorkers (coin, coinAddress) {
