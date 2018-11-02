@@ -30,7 +30,8 @@ module.exports = {
         DCR: 'decred',
         XZC: 'zcoin',
         RVN: 'raven',
-        XVG: 'verge-lyra'
+        XVG: 'verge-lyra',
+        ETP: 'metaverse'
       }
     }
   }
