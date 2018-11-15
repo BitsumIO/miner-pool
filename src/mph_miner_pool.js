@@ -8,10 +8,32 @@ class MPHMinerPool {
     this.userId = options.accountName
   }
 
+  getCoinTag (coinName) {
+    const coinTags = Object.keys(config.MINER_POOL.MPH_POOL.COIN_CURRENCY_MAP)
+    for (const tag of coinTags) {
+      const value = config.MINER_POOL.MPH_POOL.COIN_CURRENCY_MAP[tag]
+      if (value.toLowerCase() === coinName.toLowerCase()) {
+        return tag
+      }
+    }
+  }
+
   getMPHInstance (coinTag) {
     const instance =  new MiningPoolHub({ api_key: this.key })
-    instance.setCoin(config.MINER_POOL.MPH_POOL.COIN_CURRENCY_MAP[coinTag])
+    if (coinTag) {
+      instance.setCoin(config.MINER_POOL.MPH_POOL.COIN_CURRENCY_MAP[coinTag])
+    }
     return instance
+  }
+
+  async getMiningAndProfitStatis () {
+    const instance = this.getMPHInstance()
+    const result = await util.promisify(instance.getminingandprofitsstatistics.bind(instance))()
+    return result.map(it => {
+      it.tag = this.getCoinTag(it.coin_name)
+      return it
+    })
+    .filter(it => it.tag)
   }
 
   async getUserBalance (coinTag) {
