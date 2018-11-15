@@ -33,20 +33,20 @@ class MPHMinerPool {
   }
   
   normalizeWorkers (list) {
-    return (list.data || []).map(it => it.username && it.username.split('.') > 1 && it.username.split('.')[1]).filter(it => !!it)
+    return list.map(it => it.username.split('.')[1]).filter(it => !!it)
   }
 
   async getAllWorkers (coinTag) {
     const instance = this.getMPHInstance(coinTag)
     const result = await util.promisify(instance.getuserworkers.bind(instance))(this.userId)
-    return this.normalizeWorkers(result.getuserworkers)
+    return this.normalizeWorkers(result.getuserworkers.data)
   }
 
   async getWorkerLast10MinutesHashrate (coinTag, coinAddress, worker) {
     const instance = this.getMPHInstance(coinTag)
     const result = await util.promisify(instance.getuserworkers.bind(instance))(this.userId)
-    const workerStatis = result.getuserworkers.data.find(it => it.username === worker)
-    return { workerName: workerStatis.username, interval: 10, timestamp: new Date().toISOString(), value: workerStatis.hashrate }
+    const workerStatis = result.getuserworkers.data.find(it => it.username.split('.')[1] === worker)
+    return { workerName: worker, interval: 10, timestamp: new Date().toISOString(), value: workerStatis.hashrate }
   }
 
   async getAccountLast10MinutesHashrate(coinTag, coinAddress) {
