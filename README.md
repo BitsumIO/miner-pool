@@ -4,6 +4,7 @@
 
 + AntPool
 + F2Pool
++ MinerPoolHub
 + etc.
 
 ### Quick Start
