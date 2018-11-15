@@ -10,7 +10,7 @@ class MPHMinerPool {
 
   getMPHInstance (coinTag) {
     const instance =  new MiningPoolHub({ api_key: this.key })
-    instance.setCoin(config.MINER_POOL.COIN_CURRENCY_MAP[coinTag])
+    instance.setCoin(config.MINER_POOL.MPH_POOL.COIN_CURRENCY_MAP[coinTag])
     return instance
   }
 
@@ -33,7 +33,7 @@ class MPHMinerPool {
   }
   
   normalizeWorkers (list) {
-    return (list.data || []).map(it => it.username)
+    return (list.data || []).map(it => it.username && it.username.split('.') > 1 && it.username.split('.')[1]).filter(it => !!it)
   }
 
   async getAllWorkers (coinTag) {
