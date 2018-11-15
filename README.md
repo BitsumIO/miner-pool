@@ -22,16 +22,17 @@ const stats = await minerPool.getAccountStats()
 
 ### API List
 
-+ calcWorkerDailyWage
 + getPoolStats
 + getAccountStats
 + getPaymentHistory
 + getAccountHashrate
 + getAccountHashrateByType
++ getPaymentHistory
 + getWorkers
 + getWorkerHashrate
 + getWorkerHashrateByType
-+ getWorkerStatsByDay
++ getAccountLast10MinutesHashrate
++ getWorkerLast10MinutesHashrate
 
 
 ## License MIT
