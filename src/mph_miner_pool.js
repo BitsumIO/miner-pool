@@ -16,8 +16,8 @@ class MPHMinerPool {
 
   async getUserBalance (coinTag) {
     const instance = this.getMPHInstance(coinTag)
-    const result = await util.promisify(instance.getuserbalance)(this.userId)
-    return result.data
+    const result = await util.promisify(instance.getuserbalance.bind(instance))(this.userId)
+    return result.getuserbalance.data
   }
 
   async getPaymentHistory (coinTag, coinAddress, ctx) {
@@ -27,7 +27,7 @@ class MPHMinerPool {
     }
     const amount = balance.confirmed - ctx[0].balance.confirmed
     if (amount > 0) {
-      ctx.unshift({ balance, amount, timestamp: new Date().toISOString() })
+      ctx.push({ balance, amount, timestamp: new Date().toISOString() })
     }
     return ctx
   }
@@ -38,21 +38,21 @@ class MPHMinerPool {
 
   async getAllWorkers (coinTag) {
     const instance = this.getMPHInstance(coinTag)
-    const result = await util.promisify(instance.getuserworkers)(this.userId)
-    return this.normalizeWorkers(result)
+    const result = await util.promisify(instance.getuserworkers.bind(instance))(this.userId)
+    return this.normalizeWorkers(result.getuserworkers)
   }
 
   async getWorkerLast10MinutesHashrate (coinTag, coinAddress, worker) {
     const instance = this.getMPHInstance(coinTag)
-    const result = await util.promisify(instance.getuserworkers)(this.userId)
-    const workerStatis = result.data.find(it => it.username === worker)
+    const result = await util.promisify(instance.getuserworkers.bind(instance))(this.userId)
+    const workerStatis = result.getuserworkers.data.find(it => it.username === worker)
     return { workerName: workerStatis.username, interval: 10, timestamp: new Date().toISOString(), value: workerStatis.hashrate }
   }
 
   async getAccountLast10MinutesHashrate(coinTag, coinAddress) {
     const instance = this.getMPHInstance(coinTag)
-    const result = await util.promisify(instance.getuserworkers)(this.userId)
-    const accountHashrate = result.data.reduce((acc, it) => {
+    const result = await util.promisify(instance.getuserworkers.bind(instance))(this.userId)
+    const accountHashrate = result.getuserworkers.data.reduce((acc, it) => {
       return acc + it.hashrate
     }, 0)
     return { interval: 10, timestamp: new Date().toISOString(), interval: 10, value: accountHashrate }
