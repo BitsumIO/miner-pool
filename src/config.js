@@ -7,6 +7,29 @@ module.exports = {
   MINER_POOL: {
     BW_POOL: {
     },
+    MPH_POOL: {
+      COIN_CURRENCY_MAP: {
+        'ETH': 'ethereum',
+        'ETC': 'Ethereum-classic',
+        'XMR': 'monero',
+        'XMY': 'myriadcoin-skein',
+        'ZCL': 'zclassic',
+        'MAX': 'Maxcoin',
+        'XZC': 'zcoin',
+        'MONA': 'monacoin',
+        'DGB': 'digibyte-groestl',
+        'XMY': 'myriadcoin-yescrypt',
+        'GAME': 'gamecredits',
+        'GRS': 'groestlcoin',
+        'DASH': 'dash',
+        'ZEN': 'zencash',
+        'EXP': 'expanse',
+        'MUSIC': 'Musicoin',
+        'ESN': 'Ethersocial',
+        'ETN': 'Electroneum',
+        'ZEC': 'Zcash'
+      }
+    },
     ANT_POOL: {
       URL: 'https://antpool.com/api/',
       PAYMENT_TYPES: {
