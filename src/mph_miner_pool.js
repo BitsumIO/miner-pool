@@ -5,7 +5,7 @@ const MiningPoolHub = require('miningpoolhub')
 class MPHMinerPool {
   constructor (options) {
     this.key = options.key
-    this.userId = options.accountName
+    this.userId = options.userId
   }
 
   getCoinTag (coinName) {
