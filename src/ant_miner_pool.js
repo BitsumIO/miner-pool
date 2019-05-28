@@ -12,6 +12,9 @@ class AntMinerPool {
 
   async makeRequest (options) {
     const result = await request.post(Object.assign({ json: true }, options))
+    if (result && result.code < 0) {
+      throw new Error('AntMinerPool makeRequest failed: ' + result.message);
+    }
     return result && result.data
   }
 
@@ -60,7 +63,7 @@ class AntMinerPool {
 
   async getAccountLast10MinutesHashrate(coinTag, coinAddress) {
     const result = await this.getAccountHashrate(coinTag, coinAddress)
-    return { interval: 10, timestamp: moment().add(-10, 'minutes').toISOString(), value: result.last10m * 1000000 }
+    return { interval: 10, timestamp: moment().add(-10, 'minutes').toISOString(), value: result? result.last10m * 1000000 : 0 }
   }
 
   async getAccountHashrateByType (coin, type) {
@@ -75,7 +78,7 @@ class AntMinerPool {
 
   async getAllWorkers (coin, coinAddress) {
     const result = await this.getWorkers(coin, coinAddress, { pageEnable: 0 })
-    return result.rows
+    return result? result.rows : []
   }
 
   async getWorkerHashrate (coin, workerName) {
