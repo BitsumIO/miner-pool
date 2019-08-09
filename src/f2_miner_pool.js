@@ -12,8 +12,8 @@ class F2MinerPool {
 
   async makeRequest (coinTag, coinAddress, workerName = '') {
     const coinName = config.MINER_POOL.F2_POOL.COIN_CURRENCY_MAP[coinTag]
-    const url = `${config.MINER_POOL.F2_POOL.URL}${coinName}/${coinAddress}` + (workerName ? ('/' + workerName) : '')
-    const result = await request.get({ url, json: true })
+    const uri = `${config.MINER_POOL.F2_POOL.URL}${coinName}/${coinAddress}` + (workerName ? ('/' + workerName) : '')
+    const result = await request.get({ uri, json: true, proxy: null })
     return result
   }
 

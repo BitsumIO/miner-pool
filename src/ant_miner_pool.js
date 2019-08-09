@@ -11,7 +11,7 @@ class AntMinerPool {
   }
 
   async makeRequest (options) {
-    const result = await request.post(Object.assign({ json: true }, options))
+    const result = await request.post(Object.assign({ json: true, proxy: null }, options))
     if (result && result.code < 0) {
       throw new Error('AntMinerPool makeRequest failed: ' + result.message);
     }
